@@ -1,0 +1,45 @@
+{  
+	"name": "AutoHR",  
+	"manifest_version":2,
+	"version": "0.0.1",  
+	"description": "在招聘网站 浏览招聘者信息时，通过在 页面上添加按钮和输入框，方便hr 把当前页面的招聘者 信息，收录到 一个列表里，方便后续 记录统计",
+	"browser_action": {
+		"default_icon": "dangao.jpg",
+		"default_title": "AutoHR",
+		"default_popup": "popup.html"
+	},
+	// 需要直接注入页面的JS
+	"content_scripts": 
+	[
+		{
+			"matches": ["file:///*", "https://cainiaoyizhan.cainiao.com/*", "https://cainiaoyizhan.com/*"],
+			// "<all_urls>" 表示匹配所有地址
+			//"matches": ["<all_urls>"],
+			// 多个JS按顺序注入
+			"js": ["dexie.js","message_relay.prod.js","content.js"],
+			// JS的注入可以随便一点，但是CSS的注意就要千万小心了，因为一不小心就可能影响全局样式
+			"run_at": "document_end"
+		},
+		{
+			"matches": [ "http://211.156.200.95:8081/*"],
+			// "<all_urls>" 表示匹配所有地址
+			//"matches": ["<all_urls>"],
+			// 多个JS按顺序注入
+			"js": ["message_relay.prod.js","content_for_ems.js"],
+			// JS的注入可以随便一点，但是CSS的注意就要千万小心了，因为一不小心就可能影响全局样式
+			"run_at": "document_end"
+		}
+	],
+	//
+	"background": {
+		"scripts":[
+			"background.js"
+		],
+		"persistent":false
+	},
+
+	"permissions": [
+		"storage",
+		"tabs"
+	  ]
+}

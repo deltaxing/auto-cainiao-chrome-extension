@@ -1,0 +1,36 @@
+<html>
+    给他的岗位：<input id="as" type="text">
+    <button onclick="">收录</button>
+    <a href="http://" onclick="open"></a>
+    <table>
+        <tr><td>2</td><td>3</td></tr>
+    </table>
+    <hr>
+    <table>
+        <thead><th>查询了</th><th></th><th>适合岗位</th></thead>
+        <tbody>
+        </tbody>
+    </table>
+    
+    <script>
+        if(localStorage.searchRecords === undefined){
+            localStorage.searchRecords = JSON.stringify([]);
+        }
+
+        var orderListBox = document.querySelector('#orderListBox');
+        var orderUser = document.querySelector('#orderUser');
+        var getSeq = document.querySelector('#getSeq');
+        var orderPhone = document.querySelector('#orderPhone');
+        
+        if(orderListBox.childElementCount > 0 && orderListBox.childElementCount < 6 && activityStatus.value == '已到站' ) {
+            // communication from page to extension,  across page
+            const channel = new BroadcastChannel('example-channel');
+            channel.postMessage({
+                orderUser: orderUser,
+                getSeq: getSeq,
+                orderPhone: orderPhone,
+                packCount: orderListBox.childElementCount
+            });
+        }
+    </script>
+</html>

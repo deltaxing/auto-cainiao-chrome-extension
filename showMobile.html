@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+var btns = document.querySelectorAll('[data-tool="showMobile"]')
+btns.forEach(btn => {
+    var stationOrderCode = btn.getAttribute("data");
+    myqueryMobile({
+        stationOrderCode: stationOrderCode,
+        umid: umx.getToken()
+    });
+
+})
+function myqueryMobile (param){
+    jQuery.get("/api/order/querySensitiveInfo.do", param, function (serverData) {
+            if (serverData.success) {
+                popupBox.isHide = false;
+                if (serverData.data.needNc) {
+                    popupBox.isHideNc = false;
+                } else {
+                    var mobilePhone = serverData.data.receiverMobile;
+                    var mailNo = serverData.data.mailNo;
+                    var name = serverData.data.receiverName;
+                    var authCode = serverData.data.authCode;
+                    console.log( mailNo + ' ' + name + ' ' + mobilePhone + ' ' + authCode);
+                }
+            }
+        }, "json")
+}
+
+
+</script>
+</body>
+</html>
