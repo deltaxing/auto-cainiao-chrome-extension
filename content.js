@@ -1,8 +1,11 @@
 
 async function Main(){
+	//generate page id,,   avoid one message dulpulicatedly listenned by dulpulicated content.js instances. avoid doing duplicate things.
+	var pageid = Math.random();
+
 	// inject js and html into page
 	var scritpElm0 = document.createElement('script');
-	scritpElm0.src = 'https://unpkg.com/dexie@latest/dist/dexie.js';  
+	scritpElm0.src = 'https://unpkg.com/dexie@latest/dist/dexie.js'; 
 	document.head.appendChild(scritpElm0);
 
 	var scritpElm = document.createElement('script');
@@ -65,19 +68,8 @@ async function Main(){
 			value.date = Date();
 
 			const channel = new BroadcastChannel('example-channel');
-			channel.postMessage(value);
-			console.log('posted');	
-
-			var db = new Dexie("parcels_database");
-			db.version(1).stores({
-				parcels: 'mailNo,name,mobilePhone,authCode,date'
-			});
-			db.parcels.put(value).then (function(){
-			  //
-			  // Then when data is stored, read from it
-			  //
-			  console.log('putted');
-		  })
+			channel.postMessage({pageid: `+pageid+`, value});
+			console.log('injected script posted' + value.mailNo);
 		  });
 		})
 	  };
@@ -94,15 +86,24 @@ async function Main(){
 	// Define your database
 	var db = new Dexie("parcels_database");
 	db.version(1).stores({
-		parcels: 'mailNo,name,mobilePhone,authCode,date'
+		parcels: 'mailNo,name,mobilePhone,authCode,date,status'
 	});
 
 	const channel = new BroadcastChannel('example-channel');
 	channel.addEventListener('message', (event) => {
+		if(event.data.pageid !== pageid)
+			return;
 		console.log('on message')
-		console.log(event.data);
-		chrome.runtime.sendMessage(event.data, function(response) {
+		console.log(event.data.value);
+		db.parcels.add(event.data.value).then (function(){
+			//
+			// Then when data is stored, read from it
+			//
+			console.log('db added: '+ value.mailNo);
+		})
+		chrome.runtime.sendMessage(event.data.value, function(response) {
 			console.log(response);
+			db.parcels.update(response.mailNo, {status: response.status});
 		  });
 	});
 

@@ -1,2 +1,2 @@
-# auto-cainiao-chrome-extension
-批量自动把 菜鸟系统里的邮政单  登入 到邮政系统，并 在邮政系统里 标记妥投。让菜鸟驿站的系统 更易于使用，不等官方 自己改变
+# auto-hr-chrome-extension
+ one click to put candidate info into local list, then export to xlsx file. I see hr girl copy candidate info by hand, so auto it.   techniclly, code injection to public webpage and communication among public webpage, chrome.storage  and extention popup page is involved
