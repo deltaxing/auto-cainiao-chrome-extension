@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
+    <input type="text" onchange="onon(ee)">
+    <script src="./intelligent_addr_parser.js"></script>
+    <script>
+        function oninputReciever(event) {
+            const channel = new BroadcastChannel('address-input-channel');
+            channel.postMessage({pageid: `+ pageid + `, event.target.value});
+        };
+
+        console.log(tryAddr("马志刚，86-15982415958，四川省 成都市 龙泉驿区 龙泉街道 成都市龙泉驿区龙泉星光东路99号5栋"));
+        document.querySelector('input').oninput=function (event) {
+            console.log(event);
+        }
+    </script>
     this is body
 </body>
+
 </html>

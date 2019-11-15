@@ -1,23 +1,37 @@
 ﻿<meta charset="utf-8">
 
 <style type="text/css">
+    html {
+        font:large;
+    }
     div {
         width: 450px
+    }
+    #spID{
+        font:large bold;
+        
+    }
+    img{
+        width: 100vw;
     }
 </style>
 
 <div>
     <section>
-        <button type="reset" id="clear">清空</button>
-        <button id="toExcel">导出Excel</button>
+        ID:<span id='spId'>124719</span>
+        <br> 激活码：
+        <input type="text" id="activatingCode">
+        <button id="btnActivate">激活</button>
+        <br> 微信扫码付款，在备注 填上 <span id="spId">23423</span>
+        <img src="wxpay_yue.jpg" alt="">
     </section>
     <section>
-        <table id='data-table'>
-            <thead><th>日期</th><th>姓名</th><th>适合岗位</th><th>电话</th><th>渠道</th><th>来源</th></thead>
-            <tbody></tbody>
-        </table>            
+
+
     </section>
+
 </div>
+
 
 
 <script charset="utf-8" src="popup.js"></script>
